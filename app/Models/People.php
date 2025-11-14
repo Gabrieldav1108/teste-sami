@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class People extends Model
 {
+    //Defining the table name
+    protected $table = 'peoples';
+
     protected $fillable = [
         'nome',
         'cpf',

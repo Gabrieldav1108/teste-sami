@@ -25,7 +25,7 @@ class StorePeopleRequest extends FormRequest
             'nome' => 'required|string|max:255',
             'email' => 'required|email|unique:peoples,email',
             'cpf' => 'required|string|unique:peoples,cpf|max:14',
-            'telefone' => 'nullable|string|max:20',
+            'telefone' => 'required|string|max:20',
             'data_nascimento' => 'required|date',
         ];
     }
@@ -41,6 +41,8 @@ class StorePeopleRequest extends FormRequest
             'cpf.required' => 'O campo CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
             'cpf.max' => 'O CPF não pode ter mais de 14 caracteres.',
+            'telefone.max' => 'O telefone não pode ter mais de 20 caracteres.',
+            'telefone.required' => 'O campo telefone é obrigatório.',
             'data_nascimento.required' => 'O campo data de nascimento é obrigatório.',
             'data_nascimento.date' => 'Informe uma data válida.',
         ];

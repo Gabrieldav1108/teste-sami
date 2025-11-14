@@ -15,24 +15,24 @@
         
         <div>
             <label for="name" class="block text-sm font-medium text-gray-700">
-                Nome Completo *
+                Nome Completo 
             </label>
             <input
                 type="text"
-                id="name"
-                name="name"
-                value="{{ old('name', $people->name) }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('name') border-red-500 @enderror"
+                id="nome"
+                name="nome"
+                value="{{ old('nome', $people->nome) }}"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('nome') border-red-500 @enderror"
                 required
             />
-            @error('name')
+            @error('nome')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
             <label for="email" class="block text-sm font-medium text-gray-700">
-                Email *
+                Email 
             </label>
             <input
                 type="email"
@@ -49,7 +49,7 @@
 
         <div>
             <label for="cpf" class="block text-sm font-medium text-gray-700">
-                CPF *
+                CPF 
             </label>
             <input
                 type="text"
@@ -70,19 +70,19 @@
             </label>
             <input
                 type="text"
-                id="phone"
-                name="phone"
-                value="{{ old('phone', $people->phone) }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('phone') border-red-500 @enderror"
+                id="telefone"
+                name="telefone"
+                value="{{ old('telefone', $people->telefone) }}"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('telefone') border-red-500 @enderror"
             />
-            @error('phone')
+            @error('telefone')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
             <label for="birth_date" class="block text-sm font-medium text-gray-700">
-                Data de Nascimento *
+                Data de Nascimento 
             </label>
             <input
                 type="date"

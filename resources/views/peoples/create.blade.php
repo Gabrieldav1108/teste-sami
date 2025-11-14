@@ -11,101 +11,39 @@
 
     <form action="{{ route('peoples.store') }}" method="POST" class="space-y-6">
         @csrf
-        
         <div>
-            <label for="name" class="block text-sm font-medium text-gray-700">
-                Nome Completo *
-            </label>
-            <input
-                type="text"
-                id="name"
-                name="name"
-                value="{{ old('name') }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('name') border-red-500 @enderror"
-                required
-            />
-            @error('name')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-            @enderror
+            <label for="nome" class="block text-sm font-medium text-gray-700">Nome *</label>
+            <input type="text" id="nome" name="nome" value="{{ old('nome') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('nome') border-red-500 @enderror" required>
+            @error('nome') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div>
-            <label for="email" class="block text-sm font-medium text-gray-700">
-                Email *
-            </label>
-            <input
-                type="email"
-                id="email"
-                name="email"
-                value="{{ old('email') }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('email') border-red-500 @enderror"
-                required
-            />
-            @error('email')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-            @enderror
+            <label for="email" class="block text-sm font-medium text-gray-700">Email *</label>
+            <input type="email" id="email" name="email" value="{{ old('email') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('email') border-red-500 @enderror" required>
+            @error('email') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div>
-            <label for="cpf" class="block text-sm font-medium text-gray-700">
-                CPF *
-            </label>
-            <input
-                type="text"
-                id="cpf"
-                name="cpf"
-                value="{{ old('cpf') }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('cpf') border-red-500 @enderror"
-                required
-            />
-            @error('cpf')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-            @enderror
+            <label for="cpf" class="block text-sm font-medium text-gray-700">CPF *</label>
+            <input type="text" id="cpf" name="cpf" value="{{ old('cpf') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('cpf') border-red-500 @enderror" required>
+            @error('cpf') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700">
-                Telefone
-            </label>
-            <input
-                type="text"
-                id="phone"
-                name="phone"
-                value="{{ old('phone') }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('phone') border-red-500 @enderror"
-            />
-            @error('phone')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-            @enderror
+            <label for="telefone" class="block text-sm font-medium text-gray-700">Telefone *</label>
+            <input type="text" id="telefone" name="telefone" value="{{ old('telefone') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('telefone') border-red-500 @enderror">
+            @error('telefone') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div>
-            <label for="birth_date" class="block text-sm font-medium text-gray-700">
-                Data de Nascimento *
-            </label>
-            <input
-                type="date"
-                id="birth_date"
-                name="birth_date"
-                value="{{ old('birth_date') }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('birth_date') border-red-500 @enderror"
-                required
-            />
-            @error('birth_date')
-                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
-            @enderror
+            <label for="data_nascimento" class="block text-sm font-medium text-gray-700">Data de Nascimento *</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" value="{{ old('data_nascimento') }}" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('data_nascimento') border-red-500 @enderror" required>
+            @error('data_nascimento') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
         </div>
 
         <div class="flex justify-end space-x-3">
-            <a href="{{ route('peoples.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">
-                Cancelar
-            </a>
-            <button
-                type="submit"
-                class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
-            >
-                Salvar
-            </button>
+            <a href="{{ route('peoples.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">Cancelar</a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">Salvar</button>
         </div>
     </form>
 </div>

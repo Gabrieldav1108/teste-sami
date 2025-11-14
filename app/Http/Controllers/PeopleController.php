@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Repositories\PeopleRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PeopleController extends Controller
 {
@@ -29,8 +31,8 @@ class PeopleController extends Controller
     }
 
     /**
-         * Show the form for creating a new resource.
-         * @return \Illuminate\View\View
+    * Show the form for creating a new resource.
+    * @return \Illuminate\View\View
      */
     public function create(): \Illuminate\View\View
     {
@@ -39,10 +41,21 @@ class PeopleController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        try{
+            $this->peopleRepository->create($request->all());
+
+            return to_route('peoples.index')
+                ->with('success', 'Pessoa cadastrada com sucesso.');
+        } catch (\Exception $e) {
+            return back()
+            ->withInput()
+            ->with('error', 'Erro ao cadastrar pessoa: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -55,10 +68,11 @@ class PeopleController extends Controller
 
     /**
      * Show the form for editing the specified resource.
+     * @return \Illuminate\View\View
      */
-    public function edit(string $id)
+    public function edit(string $id): \Illuminate\View\View
     {
-        //
+        return view('peoples.edit')->with('people', $this->peopleRepository->find($id));
     }
 
     /**

@@ -24,10 +24,10 @@
                 <tbody>
                     @foreach($peoples as $people)
                     <tr class="border-b hover:bg-gray-50">
-                        <td class="px-4 py-2">{{ $people->name }}</td>
+                        <td class="px-4 py-2">{{ $people->nome }}</td>
                         <td class="px-4 py-2">{{ $people->email }}</td>
                         <td class="px-4 py-2">{{ $people->cpf }}</td>
-                        <td class="px-4 py-2">{{ $people->phone }}</td>
+                        <td class="px-4 py-2">{{ $people->telefone }}</td>
                         <td class="px-4 py-2">
                             <div class="flex space-x-2">
                                 <a href="{{ route('peoples.edit', $people->id) }}" 
