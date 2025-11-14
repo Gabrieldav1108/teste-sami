@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\CpfValidation;
+use App\Rules\PhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePeopleRequest extends FormRequest
@@ -38,6 +39,7 @@ class StorePeopleRequest extends FormRequest
                 'string',
                 'max:20',
                 'regex:/^\(\d{2}\)\s?\d{4,5}\-\d{4}$/',
+                new PhoneValidation(),
             ],
             'data_nascimento' => 'required|date',
         ];

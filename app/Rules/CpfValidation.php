@@ -16,6 +16,12 @@ class CpfValidation implements ValidationRule
         }
     }
 
+    /**
+     * Validate CPF number.
+     * @param string $cpf
+     * @return bool
+     */
+
     private function validateCpf(string $cpf): bool
     {
         if (strlen($cpf) != 11) {
