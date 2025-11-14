@@ -14,8 +14,9 @@ class PeopleController extends Controller
 
     /**
      * Display a listing of the resource.
+     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): \Illuminate\View\View
     {
         try {
             $peoples = $this->peopleRepository->all();
@@ -28,11 +29,12 @@ class PeopleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+         * Show the form for creating a new resource.
+         * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): \Illuminate\View\View
     {
-        //
+        return view('peoples.create');
     }
 
     /**
