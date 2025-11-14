@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CpfValidation;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StorePeopleRequest extends FormRequest
@@ -30,12 +31,7 @@ class StorePeopleRequest extends FormRequest
                 'string',
                 'unique:peoples,cpf',
                 'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/',
-                function ($attribute, $value, $fail) {
-                    $numericCpf = preg_replace('/\D/', '', $value);
-                    if (! $this->validateCpf($numericCpf)) {
-                        $fail('O CPF informado é inválido.');
-                    }
-                }
+                new CpfValidation(),
             ],
             'telefone' => [
                 'required',
@@ -70,35 +66,4 @@ class StorePeopleRequest extends FormRequest
         ];
     }
 
-    /**
-     * Summary of validateCpf
-     * @param mixed $cpf
-     * @return bool
-     */
-    private function validateCpf($cpf): bool
-    {
-        $cpf = preg_replace('/\D/', '', $cpf);
-
-        if (strlen($cpf) != 11) {
-            return false;
-        }
-
-        if (preg_match('/^(0{11}|1{11}|2{11}|3{11}|4{11}|5{11}|6{11}|7{11}|8{11}|9{11})$/', $cpf)) {
-            return false;
-        }
-
-        for ($t = 9; $t < 11; $t++) {
-            $d = 0;
-            for ($c = 0; $c < $t; $c++) {
-                $d += $cpf[$c] * (($t + 1) - $c);
-            }
-            $d = ((10 * $d) % 11) % 10;
-
-            if ($cpf[$t] != $d) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 }
