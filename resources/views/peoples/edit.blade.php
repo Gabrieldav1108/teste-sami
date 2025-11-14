@@ -4,9 +4,6 @@
 <div class="bg-white rounded-lg shadow-md p-6">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Editar Pessoa</h2>
-        <a href="{{ route('peoples.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">
-            Voltar
-        </a>
     </div>
 
     <form action="{{ route('peoples.update', $people->id) }}" method="POST" class="space-y-6">
@@ -55,7 +52,8 @@
                 type="text"
                 id="cpf"
                 name="cpf"
-                value="{{ old('cpf', $people->cpf) }}"
+                oninput="maskCPF(this)"
+                value="{{ old('cpf', $people->cpf_formatted) }}"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('cpf') border-red-500 @enderror"
                 required
             />
@@ -72,7 +70,8 @@
                 type="text"
                 id="telefone"
                 name="telefone"
-                value="{{ old('telefone', $people->telefone) }}"
+                oninput="maskPhone(this)"
+                value="{{ old('telefone', $people->phone_formatted) }}"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('telefone') border-red-500 @enderror"
             />
             @error('telefone')

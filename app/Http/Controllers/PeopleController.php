@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePeopleRequest;
+use App\Http\Requests\UpdatePeopleRequest;
 use App\Repositories\PeopleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -41,20 +43,27 @@ class PeopleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StorePeopleRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(StorePeopleRequest $request): RedirectResponse
     {
-        try{
-            $this->peopleRepository->create($request->all());
+        try {
+            $data = $request->validated();
+
+            $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
+            $data['telefone'] = preg_replace('/\D/', '', $data['telefone']);
+
+            $this->peopleRepository->create($data);
 
             return to_route('peoples.index')
                 ->with('success', 'Pessoa cadastrada com sucesso.');
+                
         } catch (\Exception $e) {
+
             return back()
-            ->withInput()
-            ->with('error', 'Erro ao cadastrar pessoa: ' . $e->getMessage());
+                ->withInput()
+                ->with('error', 'Erro ao cadastrar pessoa: ' . $e->getMessage());
         }
     }
 
@@ -77,29 +86,49 @@ class PeopleController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\UpdatePeopleRequest  $request
      * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(UpdatePeopleRequest $request, string $id): RedirectResponse
     {
-        try{
-            $this->peopleRepository->update($id, $request->all());
+        try {
+            $data = $request->validated();
+
+            if (isset($data['cpf'])) {
+                $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
+            }
+            if (isset($data['telefone'])) {
+                $data['telefone'] = preg_replace('/\D/', '', $data['telefone']);
+            }
+
+            $this->peopleRepository->update($id, $data);
 
             return to_route('peoples.index')
                 ->with('success', 'Pessoa atualizada com sucesso.');
+
         } catch (\Exception $e) {
             return back()
-            ->withInput()
-            ->with('error', 'Erro ao atualizar pessoa: ' . $e->getMessage());
+                ->withInput()
+                ->with('error', 'Erro ao atualizar pessoa: ' . $e->getMessage());
         }
     }
 
     /**
      * Remove the specified resource from storage.
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $id)
+    public function destroy(int $id): RedirectResponse
     {
-        //
+        try {
+            $this->peopleRepository->delete($id);
+
+            return to_route('peoples.index')
+                ->with('success', 'Pessoa excluída com sucesso.');
+        } catch (\Exception $e) {
+            return back()
+                ->with('error', 'Erro ao excluir pessoa: ' . $e->getMessage());
+        }
     }
 }

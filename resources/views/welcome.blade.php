@@ -31,7 +31,7 @@
 
                         <div class="mt-4 pt-3 border-top">
                             <small class="text-muted">
-                                Desenvolvido com Laravel & Bootstrap
+                                Desenvolvido com Laravel & Tailwind CSS
                             </small>
                         </div>
                     </div>
