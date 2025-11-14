@@ -86,13 +86,13 @@
             </label>
             <input
                 type="date"
-                id="birth_date"
-                name="birth_date"
-                value="{{ old('birth_date', $people->birth_date) }}"
-                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('birth_date') border-red-500 @enderror"
+                id="data_nascimento"
+                name="data_nascimento"
+                value="{{ old('data_nascimento', $people->data_nascimento) }}"
+                class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('data_nascimento') border-red-500 @enderror"
                 required
             />
-            @error('birth_date')
+            @error('data_nascimento')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>

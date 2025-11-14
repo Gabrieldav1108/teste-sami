@@ -18,6 +18,7 @@
                         <th class="px-4 py-2 text-left">Email</th>
                         <th class="px-4 py-2 text-left">CPF</th>
                         <th class="px-4 py-2 text-left">Telefone</th>
+                        <th class="px-4 py-2 text-left">Data de Nascimento</th>
                         <th class="px-4 py-2 text-left">Ações</th>
                     </tr>
                 </thead>
@@ -28,6 +29,7 @@
                         <td class="px-4 py-2">{{ $people->email }}</td>
                         <td class="px-4 py-2">{{ $people->cpf }}</td>
                         <td class="px-4 py-2">{{ $people->telefone }}</td>
+                        <td class="px-4 py-2">{{ $people->data_nascimento }}</td>
                         <td class="px-4 py-2">
                             <div class="flex space-x-2">
                                 <a href="{{ route('peoples.edit', $people->id) }}" 

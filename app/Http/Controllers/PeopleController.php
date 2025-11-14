@@ -77,10 +77,22 @@ class PeopleController extends Controller
 
     /**
      * Update the specified resource in storage.
+     * @param  \Illuminate\Http\Request  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        //
+        try{
+            $this->peopleRepository->update($id, $request->all());
+
+            return to_route('peoples.index')
+                ->with('success', 'Pessoa atualizada com sucesso.');
+        } catch (\Exception $e) {
+            return back()
+            ->withInput()
+            ->with('error', 'Erro ao atualizar pessoa: ' . $e->getMessage());
+        }
     }
 
     /**
