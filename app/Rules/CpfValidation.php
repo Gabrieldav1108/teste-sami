@@ -7,24 +7,43 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class CpfValidation implements ValidationRule
 {
+    public function __construct(
+        public bool $implicit = false,
+        private string $fieldDescription = ':attribute'
+    ) {}
+
+    /**
+     * Run the validation rule.
+     *
+     * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
+     */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        $cpf = preg_replace('/\D/', '', $value);
-        
+        if (empty($value)) {
+            if ($this->implicit) {
+                $fail(__(':fieldDescription é obrigatório.', ['fieldDescription' => $this->fieldDescription]));
+                return;
+            }
+
+            return;
+        }
+
+        $cpf = preg_replace('/\D/', '', (string) $value);
+
         if (!$this->validateCpf($cpf)) {
-            $fail('O CPF informado é inválido.');
+            $fail(__(':fieldDescription não é válido.', ['fieldDescription' => $this->fieldDescription]));
         }
     }
 
     /**
      * Validate CPF number.
+     *
      * @param string $cpf
      * @return bool
      */
-
     private function validateCpf(string $cpf): bool
     {
-        if (strlen($cpf) != 11) {
+        if (strlen($cpf) !== 11) {
             return false;
         }
 
@@ -34,12 +53,14 @@ class CpfValidation implements ValidationRule
 
         for ($t = 9; $t < 11; $t++) {
             $d = 0;
+
             for ($c = 0; $c < $t; $c++) {
-                $d += $cpf[$c] * (($t + 1) - $c);
+                $d += (int) $cpf[$c] * (($t + 1) - $c);
             }
+
             $d = ((10 * $d) % 11) % 10;
 
-            if ($cpf[$t] != $d) {
+            if ((int) $cpf[$t] !== $d) {
                 return false;
             }
         }

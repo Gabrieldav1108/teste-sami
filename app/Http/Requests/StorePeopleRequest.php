@@ -29,19 +29,14 @@ class StorePeopleRequest extends FormRequest
             'email' => 'required|email|unique:peoples,email',
             'cpf' => [
                 'required',
-                'string',
                 'unique:peoples,cpf',
-                'regex:/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/',
-                new CpfValidation(),
+                new CpfValidation(implicit: true, fieldDescription: 'O CPF'),
             ],
             'telefone' => [
                 'required',
-                'string',
-                'max:20',
-                'regex:/^\(\d{2}\)\s?\d{4,5}\-\d{4}$/',
-                new PhoneValidation(),
+                new  PhoneValidation(implicit: true, fieldDescription: 'O telefone'),
             ],
-            'data_nascimento' => 'required|date',
+            'data_nascimento' => 'required|date|before_or_equal:now',
         ];
     }
 
@@ -58,13 +53,12 @@ class StorePeopleRequest extends FormRequest
 
             'cpf.required' => 'O campo CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já está cadastrado.',
-            'cpf.regex' => 'O CPF deve estar no formato 000.000.000-00.',
 
             'telefone.required' => 'O campo telefone é obrigatório.',
-            'telefone.regex' => 'O formato do telefone é inválido.',
 
             'data_nascimento.required' => 'O campo data de nascimento é obrigatório.',
             'data_nascimento.date' => 'Informe uma data válida.',
+            'data_nascimento.before_or_equal' => 'A data de nascimento não pode ser no futuro.',
         ];
     }
 
