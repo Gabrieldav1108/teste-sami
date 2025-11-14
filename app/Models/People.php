@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class People extends Model
@@ -16,5 +17,11 @@ class People extends Model
         'email',
         'telefone'
     ];
+
+
+    public function getBirthDateFormatedAttribute()
+    {
+        return Carbon::parse($this->attributes['data_nascimento'])->format('d/m/Y');
+    }
 
 }

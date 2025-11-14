@@ -29,7 +29,7 @@
                         <td class="px-4 py-2">{{ $people->email }}</td>
                         <td class="px-4 py-2">{{ $people->cpf }}</td>
                         <td class="px-4 py-2">{{ $people->telefone }}</td>
-                        <td class="px-4 py-2">{{ $people->data_nascimento }}</td>
+                        <td class="px-4 py-2">{{ $people->birth_date_formated }}</td>
                         <td class="px-4 py-2">
                             <div class="flex space-x-2">
                                 <a href="{{ route('peoples.edit', $people->id) }}" 

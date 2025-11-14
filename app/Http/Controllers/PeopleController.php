@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePeopleRequest;
-use App\Http\Requests\UpdatePeopleRequest;
 use App\Repositories\PeopleRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -43,10 +41,10 @@ class PeopleController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * @param  \App\Http\Requests\StorePeopleRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(StorePeopleRequest $request): RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         try{
             $this->peopleRepository->create($request->all());
@@ -79,11 +77,11 @@ class PeopleController extends Controller
 
     /**
      * Update the specified resource in storage.
-     * @param  \App\Http\Requests\UpdatePeopleRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  string  $id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(UpdatePeopleRequest $request, string $id): RedirectResponse
+    public function update(Request $request, string $id): RedirectResponse
     {
         try{
             $this->peopleRepository->update($id, $request->all());
@@ -99,20 +97,9 @@ class PeopleController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param  string  $id
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(string $id)
     {
-        try {
-            $this->peopleRepository->delete($id);
-            
-            return redirect()->route('peoples.index')
-                ->with('success', 'Pessoa excluída com sucesso!');
-                
-        } catch (\Exception $e) {
-            return redirect()->route('peoples.index')
-                ->with('error', 'Erro ao excluir pessoa: ' . $e->getMessage());
-        }
+        //
     }
 }
