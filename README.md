@@ -31,7 +31,7 @@ link para instalação do Laravel Herd -> https://herd.laravel.com/
 
 1. **Clone o repositório dentro da pasta Herd(que será criada na instalação do Laravel Herd):**
 
-git clone https://github.com/Gabrieldav1108/teste-sami
+git clone https://github.com/Gabrieldav1108/teste-sami   
 cd teste-sami
 
 2. **Instale as dependências:**
@@ -63,10 +63,10 @@ Ou dentro do laravel herd vá na sessão "sites" e clice na aba "URL"
 | Método | Rota                   | Descrição                     |
 |--------|------------------------|--------------------------------|
 | GET    | `/`                    | Página inicial / Boas-vindas  |
-| GET    | `/peoples`             | Lista todas as pessoas         |
-| GET    | `/peoples/create`      | Formulário de criação          |
-| POST   | `/peoples`             | Salva uma nova pessoa          |
-| GET    | `/peoples/{id}/edit`   | Formulário de edição           |
-| PUT    | `/peoples/{id}`        | Atualiza uma pessoa            |
-| DELETE | `/peoples/{id}`        | Remove uma pessoa              |
+| GET    | `/people`             | Lista todas as pessoas         |
+| GET    | `/people/create`      | Formulário de criação          |
+| POST   | `/people`             | Salva uma nova pessoa          |
+| GET    | `/people/{id}/edit`   | Formulário de edição           |
+| PUT    | `/people/{id}`        | Atualiza uma pessoa            |
+| DELETE | `/people/{id}`        | Remove uma pessoa              |
 
