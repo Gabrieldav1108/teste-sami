@@ -31,7 +31,7 @@ link para instalação do Laravel Herd -> https://herd.laravel.com/
 
 1. **Clone o repositório dentro da pasta Herd(que será criada na instalação do Laravel Herd):**
 
-git clone https://github.com/Gabrieldav1108/teste-sami
+git clone https://github.com/Gabrieldav1108/teste-sami   
 cd teste-sami
 
 2. **Instale as dependências:**
@@ -40,28 +40,33 @@ composer install
 
 3. **Configure o arquivo de ambiente:**
 
-cp .env.example .env
---Em seguida, abra o arquivo .env e configure as informações do banco de dados (MySQL).
+cp .env.example .env  
+    --Em seguida, abra o arquivo .env e configure as informações do banco de dados (MySQL).
 
 4. **Rode as migrations:**
 
 php artisan migrate
 
-5. **Inicie o servidor usando Laravel Herd:**
+5. **Crie a chave:**
+
+php artisan key:generate
+
+6. **Inicie o servidor usando Laravel Herd:**
 
 Abra o Laravel Herd
 
-Acesse a seguinte url no navegador: http://crud-pessoas.test/
+Acesse a seguinte url no navegador: http://crud-pessoas.test/  
+Ou dentro do laravel herd vá na sessão "sites" e clice na aba "URL"
 
 ## 🔗 Rotas da Aplicação
 
 | Método | Rota                   | Descrição                     |
 |--------|------------------------|--------------------------------|
 | GET    | `/`                    | Página inicial / Boas-vindas  |
-| GET    | `/peoples`             | Lista todas as pessoas         |
-| GET    | `/peoples/create`      | Formulário de criação          |
-| POST   | `/peoples`             | Salva uma nova pessoa          |
-| GET    | `/peoples/{id}/edit`   | Formulário de edição           |
-| PUT    | `/peoples/{id}`        | Atualiza uma pessoa            |
-| DELETE | `/peoples/{id}`        | Remove uma pessoa              |
+| GET    | `/people`             | Lista todas as pessoas         |
+| GET    | `/people/create`      | Formulário de criação          |
+| POST   | `/people`             | Salva uma nova pessoa          |
+| GET    | `/people/{id}/edit`   | Formulário de edição           |
+| PUT    | `/people/{id}`        | Atualiza uma pessoa            |
+| DELETE | `/people/{id}`        | Remove uma pessoa              |
 
