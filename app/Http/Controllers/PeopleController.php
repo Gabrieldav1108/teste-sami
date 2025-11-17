@@ -93,13 +93,6 @@ class PeopleController extends Controller
         try {
             $data = $request->validated();
 
-            if (isset($data['cpf'])) {
-                $data['cpf'] = preg_replace('/\D/', '', $data['cpf']);
-            }
-            if (isset($data['telefone'])) {
-                $data['telefone'] = preg_replace('/\D/', '', $data['telefone']);
-            }
-
             if (!empty($data)) {
                 $this->peopleRepository->update($id, $data);
                 

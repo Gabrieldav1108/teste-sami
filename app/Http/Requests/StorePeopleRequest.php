@@ -56,11 +56,6 @@ class StorePeopleRequest extends FormRequest
             'email.email' => 'Informe um email válido.',
             'email.unique' => 'Este email já está cadastrado.',
 
-            'cpf.required' => 'O campo CPF é obrigatório.',
-            'cpf.unique' => 'Este CPF já está cadastrado.',
-
-            'telefone.required' => 'O campo telefone é obrigatório.',
-
             'data_nascimento.required' => 'O campo data de nascimento é obrigatório.',
             'data_nascimento.date' => 'Informe uma data válida.',
             'data_nascimento.before_or_equal' => 'A data de nascimento não pode ser no futuro.',

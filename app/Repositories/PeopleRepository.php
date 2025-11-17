@@ -40,6 +40,21 @@ class PeopleRepository implements PeopleRepositoryInterface
     {
         DB::beginTransaction();
         try {
+            if (isset($data['email'])) {
+                $emailExists = People::where('email', $data['email'])->exists();
+                if ($emailExists) {
+                    throw new Exception('Este email já está cadastrado.');
+                }
+            }
+
+            if (isset($data['cpf'])) {
+                $cleanCpf = preg_replace('/\D/', '', $data['cpf']);
+                $cpfExists = People::where('cpf', $cleanCpf)->exists();
+                if ($cpfExists) {
+                    throw new Exception('Este CPF já está cadastrado.');
+                }
+            }
+
             $people = new People();
             $people->nome = $data['nome'];
             $people->cpf = $data['cpf'];
@@ -78,24 +93,36 @@ class PeopleRepository implements PeopleRepositoryInterface
                 $people->nome = $data['nome'];
             }
 
-            if (array_key_exists('cpf', $data)) {
-                $people->cpf = $data['cpf'];
-            }
-
             if (array_key_exists('data_nascimento', $data)) {
                 $people->data_nascimento = $data['data_nascimento'];
-            }
-
-            if (array_key_exists('email', $data)) {
-                $people->email = $data['email'];
             }
 
             if (array_key_exists('telefone', $data)) {
                 $people->telefone = $data['telefone'];
             }
 
-            $people->save();
+            if (array_key_exists('email', $data) && $data['email'] !== $people->email) {
+                $exists = People::where('email', $data['email'])->where('id', '!=', $id)->exists();
+                if ($exists) {
+                    throw new Exception('Este email já está cadastrado.');
+                }
+                $people->email = $data['email'];
+            }
 
+            if (array_key_exists('cpf', $data)) {
+                $cleanCpf = preg_replace('/\D/', '', $data['cpf']);
+                $cleanCurrent = preg_replace('/\D/', '', $people->cpf);
+                
+                if ($cleanCpf !== $cleanCurrent) {
+                    $exists = People::where('cpf', $cleanCpf)->where('id', '!=', $id)->exists();
+                    if ($exists) {
+                        throw new Exception('Este CPF já está cadastrado.');
+                    }
+                    $people->cpf = $cleanCpf;
+                }
+            }
+
+            $people->save();
             DB::commit();
 
             return true;

@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\Rules\CpfValidation;
 use App\Rules\PhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdatePeopleRequest extends FormRequest
 {
@@ -42,6 +41,7 @@ class UpdatePeopleRequest extends FormRequest
                         $cleanValue = preg_replace('/\D/', '', $value);
                         $cleanCurrent = preg_replace('/\D/', '', $people->cpf);
                         
+                        // Se o CPF for diferente do atual, verifica se já existe
                         if ($cleanValue !== $cleanCurrent) {
                             $exists = \App\Models\People::where('cpf', $cleanValue)
                                 ->where('id', '!=', $people->id)
@@ -58,12 +58,13 @@ class UpdatePeopleRequest extends FormRequest
                 'sometimes',
                 new PhoneValidation(fieldDescription: 'O telefone'),
             ],
-            'data_nascimento' => ['
-                sometimes', 
+            'data_nascimento' => [
+                'sometimes', 
                 'date', 
                 'before_or_equal:now',
-                'after_or_equal:' . now()->subYears(120)->format('Y-m-d')],
-            ];
+                'after_or_equal:' . now()->subYears(120)->format('Y-m-d')
+            ],
+        ];
     }
 
     public function messages(): array
@@ -83,25 +84,16 @@ class UpdatePeopleRequest extends FormRequest
      */
     protected function prepareForValidation()
     {
-        $peopleId = $this->route('people');
-        $people = \App\Models\People::find($peopleId);
+        if ($this->has('cpf')) {
+            $this->merge([
+                'cpf' => preg_replace('/\D/', '', $this->cpf),
+            ]);
+        }
         
-        if ($people) {
-            $data = $this->all();
-            
-            if (isset($data['email']) && $data['email'] === $people->email) {
-                unset($data['email']);
-            }
-            
-            if (isset($data['cpf'])) {
-                $cleanCpf = preg_replace('/\D/', '', $data['cpf']);
-                $cleanCurrentCpf = preg_replace('/\D/', '', $people->cpf);
-                if ($cleanCpf === $cleanCurrentCpf) {
-                    unset($data['cpf']);
-                }
-            }
-            
-            $this->merge($data);
+        if ($this->has('telefone')) {
+            $this->merge([
+                'telefone' => preg_replace('/\D/', '', $this->telefone),
+            ]);
         }
     }
 }
