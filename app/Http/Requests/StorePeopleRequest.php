@@ -36,8 +36,8 @@ class StorePeopleRequest extends FormRequest
                 'required',
                 new  PhoneValidation(implicit: true, fieldDescription: 'O telefone'),
             ],
-            'data_nascimento' => ['
-                sometimes', 
+            'data_nascimento' => [
+                'required', 
                 'date', 
                 'before_or_equal:now',
                 'after_or_equal:' . now()->subYears(120)->format('Y-m-d')
