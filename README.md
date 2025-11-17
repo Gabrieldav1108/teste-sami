@@ -40,7 +40,7 @@ composer install
 
 3. **Configure o arquivo de ambiente:**
 
-cp .env.example .env  
+copy .env.example .env  
     --Em seguida, abra o arquivo .env e configure as informações do banco de dados (MySQL).
 
 4. **Rode as migrations:**
@@ -56,7 +56,7 @@ php artisan key:generate
 Abra o Laravel Herd
 
 Acesse a seguinte url no navegador: http://crud-pessoas.test/  
-Ou dentro do laravel herd vá na sessão "sites" e clice na aba "URL"
+Ou dentro do laravel herd vá na sessão "sites" e clique na aba "URL"
 
 ## 🔗 Rotas da Aplicação
 
