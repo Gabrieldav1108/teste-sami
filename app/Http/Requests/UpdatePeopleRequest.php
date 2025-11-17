@@ -41,7 +41,6 @@ class UpdatePeopleRequest extends FormRequest
                         $cleanValue = preg_replace('/\D/', '', $value);
                         $cleanCurrent = preg_replace('/\D/', '', $people->cpf);
                         
-                        // Se o CPF for diferente do atual, verifica se já existe
                         if ($cleanValue !== $cleanCurrent) {
                             $exists = \App\Models\People::where('cpf', $cleanValue)
                                 ->where('id', '!=', $people->id)
