@@ -4,7 +4,7 @@
 <div class="bg-white rounded-lg shadow-md p-6">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold">Lista de Pessoas</h2>
-        <a href="{{ route('peoples.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+        <a href="{{ route('people.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md">
             Nova Pessoa
         </a>
     </div>
@@ -32,11 +32,11 @@
                         <td class="px-4 py-2">{{ $people->birth_date_formatted }}</td>
                         <td class="px-4 py-2">
                             <div class="flex space-x-2">
-                                <a href="{{ route('peoples.edit', $people->id) }}" 
+                                <a href="{{ route('people.edit', $people->id) }}" 
                                    class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-sm">
                                     Editar
                                 </a>
-                                <form action="{{ route('peoples.destroy', $people->id) }}" method="POST" class="inline">
+                                <form action="{{ route('people.destroy', $people->id) }}" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" 

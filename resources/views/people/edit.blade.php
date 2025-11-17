@@ -6,7 +6,7 @@
         <h2 class="text-2xl font-bold">Editar Pessoa</h2>
     </div>
 
-    <form action="{{ route('peoples.update', $people->id) }}" method="POST" class="space-y-6">
+    <form action="{{ route('people.update', $people->id) }}" method="POST" class="space-y-6">
         @csrf
         @method('PUT')
         
@@ -97,7 +97,7 @@
         </div>
 
         <div class="flex justify-end space-x-3">
-            <a href="{{ route('peoples.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">
+            <a href="{{ route('people.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-md">
                 Cancelar
             </a>
             <button

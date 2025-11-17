@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePeopleRequest;
 use App\Http\Requests\UpdatePeopleRequest;
 use App\Repositories\PeopleRepository;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class PeopleController extends Controller
@@ -24,10 +22,10 @@ class PeopleController extends Controller
     {
         try {
             $peoples = $this->peopleRepository->all();
-            return view('peoples.index', compact('peoples'));
+            return view('people.index', compact('peoples'));
         } catch (\Exception $e) {
-            return view('peoples.index')
-                ->with('peoples', collect([]))
+            return view('people.index')
+                ->with('people', collect([]))
                 ->with('error', 'Erro ao carregar lista de pessoas: ' . $e->getMessage());
         }
     }
@@ -38,7 +36,7 @@ class PeopleController extends Controller
      */
     public function create(): \Illuminate\View\View
     {
-        return view('peoples.create');
+        return view('people.create');
     }
 
     /**
@@ -56,7 +54,7 @@ class PeopleController extends Controller
 
             $this->peopleRepository->create($data);
 
-            return to_route('peoples.index')
+            return to_route('people.index')
                 ->with('success', 'Pessoa cadastrada com sucesso.');
                 
         } catch (\Exception $e) {
@@ -81,7 +79,7 @@ class PeopleController extends Controller
      */
     public function edit(string $id): \Illuminate\View\View
     {
-        return view('peoples.edit')->with('people', $this->peopleRepository->find($id));
+        return view('people.edit')->with('people', $this->peopleRepository->find($id));
     }
 
     /**
@@ -104,7 +102,7 @@ class PeopleController extends Controller
 
             $this->peopleRepository->update($id, $data);
 
-            return to_route('peoples.index')
+            return to_route('people.index')
                 ->with('success', 'Pessoa atualizada com sucesso.');
 
         } catch (\Exception $e) {
@@ -124,7 +122,7 @@ class PeopleController extends Controller
         try {
             $this->peopleRepository->delete($id);
 
-            return to_route('peoples.index')
+            return to_route('people.index')
                 ->with('success', 'Pessoa excluída com sucesso.');
         } catch (\Exception $e) {
             return back()

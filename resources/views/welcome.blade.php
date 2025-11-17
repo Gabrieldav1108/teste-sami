@@ -24,7 +24,7 @@
                             Sistema para gerenciamento de cadastros de pessoas
                         </p>
 
-                        <a href="{{ route('peoples.index') }}" 
+                        <a href="{{ route('people.index') }}" 
                            class="btn btn-primary btn-lg w-100">
                             Acessar Gerenciador de Pessoas
                         </a>

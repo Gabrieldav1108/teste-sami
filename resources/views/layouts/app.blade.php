@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Pessoas - Blade</title>
+    <title>CRUD Pessoas</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
@@ -14,8 +14,8 @@
                     <h1 class="text-xl font-bold text-gray-800">CRUD Pessoas</h1>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <a href="{{ route('peoples.index') }}" class="text-gray-600 hover:text-gray-900">Lista</a>
-                    <a href="{{ route('peoples.create') }}" class="bg-blue-500 text-white px-3 py-1 rounded">Nova Pessoa</a>
+                    <a href="{{ route('people.index') }}" class="text-gray-600 hover:text-gray-900">Lista</a>
+                    <a href="{{ route('people.create') }}" class="bg-blue-500 text-white px-3 py-1 rounded">Nova Pessoa</a>
                 </div>
             </div>
         </div>
@@ -37,37 +37,35 @@
         @yield('content')
     </main>
 
-    {{-- mask of cpf --}}
 <script>
-function maskCPF(input) {
-    let value = input.value.replace(/\D/g, '');
+    // mask of cpf
+    function maskCPF(input) {
+        let value = input.value.replace(/\D/g, '');
 
-    if (value.length > 11) value = value.slice(0, 11);
+        if (value.length > 11) value = value.slice(0, 11);
 
-    value = value
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+        value = value
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d)/, "$1.$2")
+            .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
 
-    input.value = value;
-}
-</script>
-
-{{-- mask of phone --}}
-<script>
-function maskPhone(input) {
-    let value = input.value.replace(/\D/g, '');
-
-    if (value.length > 11) value = value.slice(0, 11);
-
-    if (value.length > 10) {
-        value = value.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
-    } else {
-        value = value.replace(/^(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+        input.value = value;
     }
 
-    input.value = value;
-}
+    // mask of phone
+    function maskPhone(input) {
+        let value = input.value.replace(/\D/g, '');
+
+        if (value.length > 11) value = value.slice(0, 11);
+
+        if (value.length > 10) {
+            value = value.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3");
+        } else {
+            value = value.replace(/^(\d{2})(\d{4})(\d{4})/, "($1) $2-$3");
+        }
+
+        input.value = value;
+    }
 </script>
 </body>
 </html>
