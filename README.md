@@ -40,7 +40,7 @@ composer install
 
 3. **Configure o arquivo de ambiente:**
 
-cp .env.example .env  
+copy .env.example .env  
     --Em seguida, abra o arquivo .env e configure as informações do banco de dados (MySQL).
 
 4. **Rode as migrations:**
