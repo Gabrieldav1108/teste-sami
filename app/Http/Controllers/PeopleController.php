@@ -100,10 +100,15 @@ class PeopleController extends Controller
                 $data['telefone'] = preg_replace('/\D/', '', $data['telefone']);
             }
 
-            $this->peopleRepository->update($id, $data);
-
-            return to_route('people.index')
-                ->with('success', 'Pessoa atualizada com sucesso.');
+            if (!empty($data)) {
+                $this->peopleRepository->update($id, $data);
+                
+                return to_route('people.index')
+                    ->with('success', 'Pessoa atualizada com sucesso.');
+            } else {
+                return to_route('people.index')
+                    ->with('info', 'Nenhuma alteração foi realizada.');
+            }
 
         } catch (\Exception $e) {
             return back()

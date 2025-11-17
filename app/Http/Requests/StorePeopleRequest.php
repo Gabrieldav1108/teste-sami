@@ -36,7 +36,12 @@ class StorePeopleRequest extends FormRequest
                 'required',
                 new  PhoneValidation(implicit: true, fieldDescription: 'O telefone'),
             ],
-            'data_nascimento' => 'required|date|before_or_equal:now',
+            'data_nascimento' => ['
+                sometimes', 
+                'date', 
+                'before_or_equal:now',
+                'after_or_equal:' . now()->subYears(120)->format('Y-m-d')
+            ],
         ];
     }
 
@@ -59,6 +64,7 @@ class StorePeopleRequest extends FormRequest
             'data_nascimento.required' => 'O campo data de nascimento é obrigatório.',
             'data_nascimento.date' => 'Informe uma data válida.',
             'data_nascimento.before_or_equal' => 'A data de nascimento não pode ser no futuro.',
+            'data_nascimento.after_or_equal' => 'A data de nascimento não pode ser anterior a 120 anos atrás.',
         ];
     }
 

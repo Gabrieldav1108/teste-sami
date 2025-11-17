@@ -37,7 +37,7 @@
                 name="email"
                 value="{{ old('email', $people->email) }}"
                 class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 @error('email') border-red-500 @enderror"
-                required
+                
             />
             @error('email')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>

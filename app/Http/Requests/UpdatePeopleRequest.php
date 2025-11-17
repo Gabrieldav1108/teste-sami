@@ -5,40 +5,65 @@ namespace App\Http\Requests;
 use App\Rules\CpfValidation;
 use App\Rules\PhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdatePeopleRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
     
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
-        $peopleId = $this->route('people'); 
+        $peopleId = $this->route('people');
+        $people = \App\Models\People::find($peopleId);
 
         return [
             'nome' => 'sometimes|string|max:255|min:3',
-            'email' => 'sometimes|email|unique:peoples,email,' . $peopleId,
+            'email' => [
+                'sometimes',
+                'email',
+                function ($attribute, $value, $fail) use ($people) {
+                    if ($people && $value !== $people->email) {
+                        $exists = \App\Models\People::where('email', $value)
+                            ->where('id', '!=', $people->id)
+                            ->exists();
+                        if ($exists) {
+                            $fail('Este email já está cadastrado.');
+                        }
+                    }
+                },
+            ],
             'cpf' => [
                 'sometimes',
-                'unique:peoples,cpf,' . $peopleId,
+                function ($attribute, $value, $fail) use ($people) {
+                    if ($people) {
+                        $cleanValue = preg_replace('/\D/', '', $value);
+                        $cleanCurrent = preg_replace('/\D/', '', $people->cpf);
+                        
+                        if ($cleanValue !== $cleanCurrent) {
+                            $exists = \App\Models\People::where('cpf', $cleanValue)
+                                ->where('id', '!=', $people->id)
+                                ->exists();
+                            if ($exists) {
+                                $fail('Este CPF já está cadastrado.');
+                            }
+                        }
+                    }
+                },
                 new CpfValidation(fieldDescription: 'O CPF'),
             ],
             'telefone' => [
                 'sometimes',
-                new  PhoneValidation(fieldDescription: 'O telefone'),
+                new PhoneValidation(fieldDescription: 'O telefone'),
             ],
-            'data_nascimento' => 'sometimes|date|before_or_equal:now',
-        ];
+            'data_nascimento' => ['
+                sometimes', 
+                'date', 
+                'before_or_equal:now',
+                'after_or_equal:' . now()->subYears(120)->format('Y-m-d')],
+            ];
     }
 
     public function messages(): array
@@ -46,15 +71,37 @@ class UpdatePeopleRequest extends FormRequest
         return [
             'nome.max' => 'O nome não pode ter mais de 255 caracteres.',
             'nome.min' => 'O nome deve ter pelo menos 3 caracteres.',
-
             'email.email' => 'Informe um email válido.',
-            'email.unique' => 'Este email já está cadastrado.',
-
-            'cpf.unique' => 'Este CPF já está cadastrado.',
-
             'data_nascimento.date' => 'Informe uma data válida.',
             'data_nascimento.before_or_equal' => 'A data de nascimento não pode ser no futuro.',
+            'data_nascimento.after_or_equal' => 'A data de nascimento não pode ser anterior a 120 anos atrás.',
         ];
     }
 
+    /**
+     * Prepare the data for validation.
+     */
+    protected function prepareForValidation()
+    {
+        $peopleId = $this->route('people');
+        $people = \App\Models\People::find($peopleId);
+        
+        if ($people) {
+            $data = $this->all();
+            
+            if (isset($data['email']) && $data['email'] === $people->email) {
+                unset($data['email']);
+            }
+            
+            if (isset($data['cpf'])) {
+                $cleanCpf = preg_replace('/\D/', '', $data['cpf']);
+                $cleanCurrentCpf = preg_replace('/\D/', '', $people->cpf);
+                if ($cleanCpf === $cleanCurrentCpf) {
+                    unset($data['cpf']);
+                }
+            }
+            
+            $this->merge($data);
+        }
+    }
 }
